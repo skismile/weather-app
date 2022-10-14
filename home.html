@@ -4,9 +4,107 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="./index.css">
+<!-- <link rel="stylesheet" href="./index.css"> -->
     <script src="https://kit.fontawesome.com/cf7929bfee.js" crossorigin="anonymous"></script>
     <title>Weather app</title>
+    <style>
+        * {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    }
+    .container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    }
+    .box {
+        display: flex;
+        justify-content: center;
+    width: 25%;
+    height: 60vh;
+    background-color: #a5bbdd;
+    margin: auto;
+    border-radius: 10px;
+    box-shadow: 5px 5px 25px -5px rgba(0, 0, 0, 0.5);
+    position: relative;
+    overflow: hidden;
+    transform: translate3d(0, 0, 0);
+    }
+    .inputData {
+    padding: 20px;
+    }
+    .inputData input {
+    padding: 10px;
+    width: 100%;
+    outline: none;
+    border: none;
+    font-size: 20px;
+    border-radius: 10px;
+    }
+    i {
+    font-size: 60px;
+    margin-right: 30px;
+    }
+    .info {
+    margin-top: 20%;
+    }
+    .info .temp {
+    font-size: 30px;
+    margin: 20px 0 20px 0;
+    }
+    .info h3 {
+    font-size: 20px;
+    font-weight: 400;
+    }
+    .wave1 {
+    opacity: 0.3;
+    position: absolute;
+    top: 120%;
+    left: 50%;
+    background: white;
+    width: 50rem;
+    height: 50rem;
+    margin-left: -25rem;
+    margin-top: -20rem;
+    transform-origin: 50% 48%;
+    border-radius: 43%;
+    animation: drift 3000ms infinite linear;
+    z-index: 1;
+    }
+    .wave2 {
+    animation: drift 5000ms infinite linear;
+    z-index: 2 !important;
+    opacity: 0.2;
+    }
+    .wave3 {
+    animation: drift 7000ms infinite linear;
+    z-index: 3 !important;
+    opacity: 0.1;
+    }
+    .box::after {
+    content: "";
+    display: block;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 11;
+    transform: translate3d(0, 0, 0);
+    }
+    @keyframes drift {
+    from {
+    transform: rotate(0deg);
+    }
+    from {
+    transform: rotate(360deg);
+    }
+    }
+    </style>
 </head>
 <body>
     
@@ -16,14 +114,14 @@
     <div class="wave -three" ></div>
 
 <div id="weathercon">
-    <i class="fa-solid fa-sun" style="color:#eccc68;"></i>
+  
 </div>
 
 <div class="info">
 
     <h2 class="location">
         <i class="fa-solid fa-street-view" style="color:rgb(60, 35, 35);""></i>
-        {%name%} , {%country%}
+        {%city%} , {%country%}
     </h2>
 <p id="date">
     wed | oct 25 | 10.45Am
@@ -43,9 +141,29 @@
 <script >
 let currDate=document.getElementById("date")
 let weathercon=document.getElementById("weathercon")
-const tempStatus="Clouds"
+const tempStatus="{%tempstatus%}"
+
+if(tempStatus=="Sunny")
+{
+weathercon.innerHTML="<i class='fa-solid fa-sun' style='color:#eccc68;'></i>"
+
+}
+else if(tempStatus=="Clouds")
+{
+weathercon.innerHTML="<i class='fa-solid fa-cloud' style='color:#f1f2f6;'></i>"
+
+}
+else if(tempStatus=="Rainy")
+{
+weathercon.innerHTML="<i class='fa-solid fa-rain' style='color:#a4b0be;'></i>"
+
+}
+else{
+    weathercon.innerHTML="<i class='fa-solid fa-cloud' style='color:#44c3de;'></i>"
+}
 
 const getCurrentDay= ()=>{
+
     let weekday=['Sunday',"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
     let currentTime= new Date()
     let day = weekday[currentTime.getDay()]
