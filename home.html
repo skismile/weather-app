@@ -23,13 +23,13 @@
 
     <h2 class="location">
         <i class="fa-solid fa-street-view" style="color:rgb(60, 35, 35);""></i>
-        Pune , In
+        {%name%} , {%country%}
     </h2>
 <p id="date">
     wed | oct 25 | 10.45Am
 </p>
-<h1 class=""temp>26.49 c</h1>
-<h3 class=""tempmin_max>Min 26.45  | max 28.70 c</h3>
+<h1 class=""temp>{%temp%}</h1>
+<h3 class=""tempmin_max>Min {%temp_min%}  | max {%temp_max%} c</h3>
 </div>
 
 
@@ -40,25 +40,49 @@
 </html>
 
 
-<script src="./index.js">
-const currDate=document.getAnimations("date")
+<script >
+let currDate=document.getElementById("date")
 let weathercon=document.getElementById("weathercon")
 const tempStatus="Clouds"
 
 const getCurrentDay= ()=>{
     let weekday=['Sunday',"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
-
     let currentTime= new Date()
+    let day = weekday[currentTime.getDay()]
 
+
+return day
 }
 
 const getCurrentTime=()=>{
+    var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul","Aug", "Sep", "Oct", "Nov", "Dec"];
 var currentTime= new Date()
-let month=currentTime.getMonth()
-let day=currentTime.getDate()
+let month=months[currentTime.getMonth()]
+let date=currentTime.getDate()
 let year=currentTime.getFullYear()
-
+console.log(currentTime.getDate() )
+let hours=currentTime.getHours()
+let mins=currentTime.getMinutes()
+let perios="AM"
+if(hours>11) 
+{
+    periods="PM"
+    if(hours>12){
+        
+        hours-=12;
+    } 
+}
+if(mins<10)
+{
+    mins="0"+mins
+}
+if(hours<10)
+{
+    hours="0"+hours
+}
+return  `${month} ${date} | ${hours}:${mins} ${periods}`
 
 }
-
+currDate.innerHTML=getCurrentDay() +" | " + getCurrentTime()
+console.log(getCurrentTime())
 </script>
